@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import Auth from "./navigation/authNavigation";
+import LandingNav from "./navigation/navigation";
+import { Authcontext } from "./context/auth-context";
+import { UserAuth } from "./hooks/auth";
+
 
 export default function App() {
+
+  const { userId, token, login, logout } = UserAuth();
+  let routes;
+  if (token) {
+    routes = <LandingNav />;
+  } else {
+    routes = <Auth />;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Authcontext.Provider
+      value={{ userId: userId, token: token, login: login, logout: logout }}
+    >
+      <LandingNav />
+    </Authcontext.Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
