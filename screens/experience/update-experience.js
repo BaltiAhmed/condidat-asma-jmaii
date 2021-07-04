@@ -14,9 +14,9 @@ import IconEntypo from "react-native-vector-icons/Entypo";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Authcontext } from "../../context/auth-context";
 
-const AjoutFormation = (props) => {
-  const [nom, setNom] = useState();
-  const [etablissement, setetablissement] = useState();
+const UpdateExperience = (props) => {
+  const [poste, setPoste] = useState();
+  const [employeur, setemployeur] = useState();
   const [ville, setville] = useState();
   const [A_debut, setA_debut] = useState();
   const [A_fin, setA_fin] = useState();
@@ -52,25 +52,25 @@ const AjoutFormation = (props) => {
     hideDatePickerA_Fin();
   };
 
-  const auth = useContext(Authcontext);
+  const id = props.navigation.getParam("id");
 
   const submit = async () => {
-    console.log(nom, etablissement, ville, A_debut, A_fin, description);
+    
     let response = await fetch(
-      "http://192.168.1.185:5000/api/formation/ajout",
+      `http://192.168.1.185:5000/api/experience/${id}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nom_deplome: nom,
-          etablissement: etablissement,
+          poste: poste,
+          employeur: employeur,
           ville: ville,
-          A_debut: A_debut,
-          A_fin: A_fin,
+          Ddebut: A_debut,
+          Dfin: A_fin,
           description: description,
-          condidatId: auth.userId,
+          
         }),
       }
     );
@@ -90,22 +90,22 @@ const AjoutFormation = (props) => {
       <View>
         <Item regular>
           <Input
-            placeholder="Nom"
+            placeholder="Poste"
             style={{ marginTop: "10%" }}
-            value={nom}
+            value={poste}
             onChangeText={(text) => {
-              setNom(text);
+              setPoste(text);
             }}
           />
         </Item>
 
         <Item regular>
           <Input
-            placeholder="Etablissement"
+            placeholder="Employeur"
             style={{ marginTop: "10%" }}
-            value={etablissement}
+            value={employeur}
             onChangeText={(text) => {
-              setetablissement(text);
+              setemployeur(text);
             }}
           />
         </Item>
@@ -177,9 +177,9 @@ const AjoutFormation = (props) => {
   );
 };
 
-AjoutFormation.navigationOptions = (navData) => {
+UpdateExperience.navigationOptions = (navData) => {
   return {
-    headerTitle: "Ajouter une formation",
+    headerTitle: "Update une experience",
   };
 };
 
@@ -192,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AjoutFormation;
+export default UpdateExperience;

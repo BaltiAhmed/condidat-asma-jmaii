@@ -14,7 +14,7 @@ import IconEntypo from "react-native-vector-icons/Entypo";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Authcontext } from "../../context/auth-context";
 
-const AjoutFormation = (props) => {
+const UpdateFormation = (props) => {
   const [nom, setNom] = useState();
   const [etablissement, setetablissement] = useState();
   const [ville, setville] = useState();
@@ -52,14 +52,14 @@ const AjoutFormation = (props) => {
     hideDatePickerA_Fin();
   };
 
-  const auth = useContext(Authcontext);
+  const id = props.navigation.getParam("id");
 
   const submit = async () => {
     console.log(nom, etablissement, ville, A_debut, A_fin, description);
     let response = await fetch(
-      "http://192.168.1.185:5000/api/formation/ajout",
+      `http://192.168.1.185:5000/api/formation/${id}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -70,7 +70,6 @@ const AjoutFormation = (props) => {
           A_debut: A_debut,
           A_fin: A_fin,
           description: description,
-          condidatId: auth.userId,
         }),
       }
     );
@@ -177,9 +176,9 @@ const AjoutFormation = (props) => {
   );
 };
 
-AjoutFormation.navigationOptions = (navData) => {
+UpdateFormation.navigationOptions = (navData) => {
   return {
-    headerTitle: "Ajouter une formation",
+    headerTitle: "Mise à jour de la formation",
   };
 };
 
@@ -192,4 +191,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AjoutFormation;
+export default UpdateFormation;
