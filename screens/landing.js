@@ -32,12 +32,22 @@ const Landing = (props) => {
     };
     sendRequest();
   }, []);
-  console.log(list)
+  console.log(list);
   return (
     <View>
       {list &&
         list.map((item) => (
-          <ListItem avatar>
+          <ListItem
+            avatar
+            onPress={() => {
+              props.navigation.navigate({
+                routeName: "DetailOffre",
+                params: {
+                  id: item._id,
+                },
+              });
+            }}
+          >
             <Left>
               <Thumbnail source={{ uri: `http://192.168.1.185:5000/` }} />
             </Left>

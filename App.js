@@ -19,7 +19,7 @@ export default function App() {
     <Authcontext.Provider
       value={{ userId: userId, token: token, login: login, logout: logout }}
     >
-      <LandingNav />
+      {routes}
     </Authcontext.Provider>
   );
 }

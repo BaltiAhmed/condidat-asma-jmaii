@@ -18,10 +18,12 @@ import UpdateExperience from "../screens/experience/update-experience";
 import ListeCompetence from "../screens/competance/liste-competence";
 import AjoutCompetence from "../screens/competance/add-competence";
 import UpdateCompetence from "../screens/competance/update-Competence";
+import DetailOffre from "../screens/detailPage";
 
 const LandingNav = createStackNavigator(
   {
     Landing: Landing,
+    DetailOffre: DetailOffre,
   },
   {
     defaultNavigationOptions: {
