@@ -8,7 +8,10 @@ import {
   RefreshControl,
   ScrollView,
   Button,
+  Alert
 } from "react-native";
+import { Spinner } from "native-base";
+import { Authcontext } from "../context/auth-context";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -38,7 +41,6 @@ const DetailOffre = (props) => {
 
   const id = props.navigation.getParam("id");
   console.log(id);
-
   useEffect(() => {
     const sendRequest = async () => {
       const response = await fetch(
@@ -70,6 +72,37 @@ const DetailOffre = (props) => {
     sendRequest();
   }, []);
   console.log(list);
+  const [loading, setLoading] = useState(false);
+  const auth = useContext(Authcontext);
+  const submit = async () => {
+
+    setLoading(true);
+
+    let response = await fetch(
+      "http://192.168.1.185:5000/api/condidat/postuler",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idCondidat: auth.userId,
+          idOffre: id,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      let responsedata = await response.json();
+      Alert.alert("Message", responsedata.message, [{ text: "fermer" }]);
+      setLoading(false);
+      throw new Error(responsedata.message);
+    }
+
+    let responsedata = await response.json();
+    Alert.alert("Message", "demande enregistrer", [{ text: "fermer" }]);
+    setLoading(false);
+  };
   return (
     <ScrollView
       refreshControl={
@@ -102,7 +135,11 @@ const DetailOffre = (props) => {
       </View>
 
       <View style={{ marginTop: 10 }}>
-        <Button title="Postuler" color="#0086c3" onPress={() => {}} />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Button title="Postuler" color="#0086c3" onPress={submit} />
+        )}
       </View>
     </ScrollView>
   );
@@ -131,7 +168,7 @@ const styles = StyleSheet.create({
   mealDetail: {
     paddingHorizontal: 10,
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   bgImage: {
     width: "100%",
