@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -54,10 +54,35 @@ const UpdateFormation = (props) => {
 
   const id = props.navigation.getParam("id");
 
+ 
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      const response = await fetch(
+        `http://192.168.1.46:5000/api/formation/${id}`
+      );
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+  
+      setNom(responseData.formation.nom_deplome)
+      setetablissement(responseData.formation.etablissement)
+      setville(responseData.formation.ville)
+      setA_debut(responseData.formation.A_debut)
+      setA_fin(responseData.formation.A_fin)
+      setdescription(responseData.formation.description)
+    };
+
+    sendRequest();
+  }, []);
+
   const submit = async () => {
     console.log(nom, etablissement, ville, A_debut, A_fin, description);
     let response = await fetch(
-      `http://192.168.1.185:5000/api/formation/${id}`,
+      `http://192.168.1.46:5000/api/formation/${id}`,
       {
         method: "PATCH",
         headers: {

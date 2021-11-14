@@ -20,7 +20,7 @@ const ListeFormation = (props) => {
     wait(2000).then(() => setRefreshing(false));
     const sendRequest = async () => {
       const response = await fetch(
-        `http://192.168.1.185:5000/api/formation/codidat/${auth.userId}`
+        `http://192.168.1.46:5000/api/formation/codidat/${auth.userId}`
       );
 
       const responseData = await response.json();
@@ -38,7 +38,7 @@ const ListeFormation = (props) => {
   useEffect(() => {
     const sendRequest = async () => {
       const response = await fetch(
-        `http://192.168.1.185:5000/api/formation/codidat/${auth.userId}`
+        `http://192.168.1.46:5000/api/formation/codidat/${auth.userId}`
       );
 
       const responseData = await response.json();

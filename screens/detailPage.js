@@ -60,7 +60,7 @@ const DetailOffre = (props) => {
 
   useEffect(() => {
     const sendRequest = async () => {
-      const response = await fetch(`http://192.168.1.185:5000/api/offre/${id}`);
+      const response = await fetch(`http://192.168.1.46:5000/api/offre/${id}`);
 
       const responseData = await response.json();
       if (!response.ok) {
@@ -79,7 +79,7 @@ const DetailOffre = (props) => {
     setLoading(true);
 
     let response = await fetch(
-      "http://192.168.1.185:5000/api/condidat/postuler",
+      "http://192.168.1.46:5000/api/condidat/postuler",
       {
         method: "POST",
         headers: {
@@ -115,7 +115,7 @@ const DetailOffre = (props) => {
             <View style={{ ...styles.MealRow, ...styles.mealHeader }}>
               <ImageBackground
                 source={{
-                  uri: `http://192.168.1.185:5000/${entreprise.image}`,
+                  uri: `http://192.168.1.46:5000/${list.photo}`,
                 }}
                 style={styles.bgImage}
               >
